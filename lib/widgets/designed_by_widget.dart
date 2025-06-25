@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mipuiaw_apps/reusables/reusables.dart';
 
 class DevelopedByWidget extends StatelessWidget {

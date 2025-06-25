@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:mipuiaw_apps/controllers/grievance_controller.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
 import 'package:mipuiaw_apps/reusables/reusables.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class GrievanceScreen extends StatelessWidget {
   const GrievanceScreen({super.key});
@@ -25,46 +26,36 @@ class GrievanceScreen extends StatelessWidget {
                 Get.toNamed('/lodge-grievance');
               },
             ),
-            body: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        headingLine(),
-                        sizedBoxWidth(10),
-                        const Text('Grievance List',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            )),
-                      ],
-                    ),
-                    sizedBoxHeight(10),
-                    Obx(
-                      () => controller.isLoading.isTrue
-                          ? const Center(
-                              child: CircularProgressIndicator(),
-                            )
-                          : ListView.separated(
+            body: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Obx(
+                () => controller.isLoading.isTrue
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : SingleChildScrollView(
+                        child: SizedBox(
+                          height: Get.height - 210,
+                          child: SmartRefresher(
+                            enablePullDown: true,
+                            enablePullUp: true,
+                            header: const WaterDropHeader(),
+                            controller: controller.refreshController,
+                            onRefresh: controller.onRefresh,
+                            onLoading: controller.onLoading,
+                            child: ListView.separated(
                               separatorBuilder: (context, index) =>
                                   sizedBoxHeight(10),
                               shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
+                              // physics: const NeverScrollableScrollPhysics(),
                               itemCount: controller.grievanceList.length,
                               itemBuilder: (c, i) {
                                 var data = controller.grievanceList[i];
                                 return InkWell(
                                   onTap: () {
-                                    controller.getGrievanceById(() {
-                                      showLoader(context);
-                                    }, () {
-                                      hideLoader();
-                                    }, () {
-                                      hideLoader();
-                                    });
+                                    Get.toNamed(
+                                      '/grievance-details/${data['id']}',
+                                    );
                                   },
                                   child: Card(
                                     color: Colors.white,
@@ -143,9 +134,9 @@ class GrievanceScreen extends StatelessWidget {
                                 // );
                               },
                             ),
-                    ),
-                  ],
-                ),
+                          ),
+                        ),
+                      ),
               ),
             ),
           );

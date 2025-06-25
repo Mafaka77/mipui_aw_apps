@@ -16,4 +16,8 @@ class Routes {
   //GRIEVANCE
   static String GET_CREDIT = '$BASE_URL/get-credit';
   static String GET_ALL_GRIEVANCE = '$BASE_URL/get-grievance';
+  static String SUBMIT_GRIEVANCE = '$BASE_URL/store-grievance';
+  static String GET_GRIEVANCE_DETAILS(int id) => '$BASE_URL/grievance/$id/show';
+  static String SUBMIT_FEEDBACK(int id) => '$BASE_URL/grievance/$id/feedback';
+  static String PRINT_GRIEVANCE(int id) => '$BASE_URL/grievance/$id/print';
 }

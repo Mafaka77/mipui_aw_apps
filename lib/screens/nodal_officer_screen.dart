@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:mipuiaw_apps/controllers/profile_controller.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
 import 'package:mipuiaw_apps/reusables/reusables.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NodalOfficerScreen extends GetView<ProfileController> {
   const NodalOfficerScreen({super.key});
@@ -11,26 +12,31 @@ class NodalOfficerScreen extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text(
+          'Nodal Officers',
+          style: TextStyle(
+              fontSize: 11.0, fontWeight: FontWeight.bold, letterSpacing: 1.5),
+        ),
         backgroundColor: MyColor.limeGreen,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  headingLine(),
-                  sizedBoxWidth(10),
-                  const Text('List of Nodal Officers'),
-                ],
-              ),
-              sizedBoxHeight(20),
-              Obx(
-                () => ListView.builder(
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Obx(
+          () => SingleChildScrollView(
+            child: SizedBox(
+              width: Get.width,
+              height: Get.height - 100,
+              child: SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: true,
+                header: const WaterDropHeader(),
+                onRefresh: controller.onRefresh,
+                onLoading: controller.onLoading,
+                controller: controller.refreshController,
+                child: ListView.builder(
                   itemCount: controller.nodalOfficers.length,
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  // physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, index) {
                     final official = controller.nodalOfficers[index];
                     return Card(
@@ -66,7 +72,7 @@ class NodalOfficerScreen extends GetView<ProfileController> {
                   },
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ),

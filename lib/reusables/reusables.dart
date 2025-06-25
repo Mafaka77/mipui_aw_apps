@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_overlay_loader/flutter_overlay_loader.dart';
 import 'package:get/get.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
+import 'package:open_file/open_file.dart';
 
 textBoxFocusBorder() {
   return OutlineInputBorder(
@@ -132,4 +133,26 @@ extension HexColor on Color {
     buffer.write(hexString.replaceFirst('#', ''));
     return Color(int.parse(buffer.toString(), radix: 16));
   }
+}
+
+showDownloadSuccessSnackBar(
+    String title, String message, Icon icon, String filePath) {
+  return Get.rawSnackbar(
+    title: title,
+    message: message,
+    icon: icon,
+    shouldIconPulse: true,
+    backgroundColor: MyColor.green,
+    padding: const EdgeInsets.all(10),
+    snackPosition: SnackPosition.BOTTOM,
+    duration: const Duration(seconds: 5),
+    margin: const EdgeInsets.all(20),
+    mainButton: MaterialButton(
+      onPressed: () {
+        print(filePath);
+        OpenFile.open(filePath);
+      },
+      child: const Text('VIEW'),
+    ),
+  );
 }

@@ -45,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
                               children: [
                                 const Text(
                                   'Welcome,',
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 12),
                                 ),
                                 Obx(() {
                                   final user = controller.profile.value;
@@ -54,7 +54,7 @@ class ProfileScreen extends StatelessWidget {
                                     width: 250.0,
                                     child: DefaultTextStyle(
                                       style: GoogleFonts.lilitaOne(
-                                        fontSize: 20,
+                                        fontSize: 17,
                                         letterSpacing: 2,
                                       ),
                                       child: AnimatedTextKit(

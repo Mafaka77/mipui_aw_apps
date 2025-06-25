@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:mipuiaw_apps/routes.dart';
 import 'package:mipuiaw_apps/services/base_services.dart';
 import 'package:dio/dio.dart' as dio;

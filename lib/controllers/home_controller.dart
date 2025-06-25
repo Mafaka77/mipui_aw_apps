@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mipuiaw_apps/models/carousel_model.dart';
 import 'package:mipuiaw_apps/services/home_services.dart';

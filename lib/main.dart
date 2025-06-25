@@ -3,10 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mipuiaw_apps/controllers/auth_controller.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
 import 'package:mipuiaw_apps/reusables/router.dart';
-import 'package:mipuiaw_apps/screens/home_screen.dart';
 import 'package:mipuiaw_apps/services/auth_services.dart';
 import 'package:mipuiaw_apps/services/grievance_services.dart';
 import 'package:mipuiaw_apps/services/home_services.dart';
@@ -45,7 +43,20 @@ class MyApp extends StatelessWidget {
     var baseTheme = ThemeData();
     return baseTheme.copyWith(
       scaffoldBackgroundColor: MyColor.lightGreen,
-      textTheme: GoogleFonts.robotoMonoTextTheme(baseTheme.textTheme),
+      textTheme: GoogleFonts.robotoMonoTextTheme(baseTheme.textTheme).copyWith(
+        bodyLarge: const TextStyle(
+          color: Colors.black,
+          fontSize: 15,
+        ),
+        bodyMedium: const TextStyle(
+          color: Colors.black,
+          fontSize: 15,
+        ),
+        bodySmall: const TextStyle(
+          color: Colors.black,
+          fontSize: 15,
+        ),
+      ),
     );
   }
 }

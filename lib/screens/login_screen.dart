@@ -61,11 +61,11 @@ class LoginScreen extends StatelessWidget {
                               return null;
                             },
                             decoration: InputDecoration(
-                                enabledBorder: textBoxFocusBorder(),
-                                focusedBorder: textBoxFocusBorder(),
-                                border: textBoxFocusBorder(),
-                                isDense: true,
-                                labelText: 'Enter Email'),
+                              labelText: 'Email/Phone',
+                              border: textBoxFocusBorder(),
+                              enabledBorder: textBoxFocusBorder(),
+                              focusedBorder: textBoxFocusBorder(),
+                            ),
                           ),
                           sizedBoxHeight(10),
                           Obx(
@@ -74,8 +74,8 @@ class LoginScreen extends StatelessWidget {
                               obscureText:
                                   controller.isLoginPasswordHidden.value,
                               decoration: InputDecoration(
-                                labelText: 'Password',
                                 isDense: true,
+                                labelText: 'Password',
                                 border: textBoxFocusBorder(),
                                 enabledBorder: textBoxFocusBorder(),
                                 focusedBorder: textBoxFocusBorder(),

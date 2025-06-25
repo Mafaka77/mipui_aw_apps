@@ -1,4 +1,4 @@
-import 'package:mipuiaw_apps/controllers/grievance_model.dart';
+import 'package:dio/dio.dart';
 import 'package:mipuiaw_apps/models/department_model.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:mipuiaw_apps/routes.dart';
@@ -28,9 +28,26 @@ class GrievanceServices extends BaseService {
     }
   }
 
-  Future getAllGrievance() async {
+  Future getAllGrievance(int offset, int limit) async {
     try {
-      var response = await client.get(Routes.GET_ALL_GRIEVANCE);
+      var response =
+          await client.get(Routes.GET_ALL_GRIEVANCE, queryParameters: {
+        "offset": offset,
+        "limit": limit,
+      });
+      return response;
+    } catch (ex) {
+      print(ex);
+      return Future.error(ex);
+    }
+  }
+
+  Future getGrievanceDetails(String grievanceId) async {
+    try {
+      var response = await client.get(
+        Routes.GET_GRIEVANCE_DETAILS(int.parse(grievanceId)),
+      );
+
       return response;
     } catch (ex) {
       print(ex);
@@ -39,8 +56,37 @@ class GrievanceServices extends BaseService {
   }
 
   Future submitGrievance(dio.FormData formData) async {
+    // print(formData.fields);
     try {
-      print(formData.files);
-    } catch (ex) {}
+      var response = await client.post(
+        Routes.SUBMIT_GRIEVANCE,
+        data: formData,
+        options: Options(
+          contentType: 'multipart/form-data',
+        ),
+      );
+      return response;
+    } catch (ex) {
+      print(ex);
+      return Future.error(ex);
+    }
+  }
+
+  Future submitFeedback(
+      int id, String regNo, String priority, String comment) async {
+    print(id);
+    try {
+      var response = await client.post(
+        Routes.SUBMIT_FEEDBACK(id),
+        data: {
+          "category": priority,
+          "feedback": comment,
+        },
+      );
+      return response;
+    } catch (ex) {
+      print(ex);
+      return Future.error(ex);
+    }
   }
 }

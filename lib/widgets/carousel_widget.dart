@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:get/get.dart';
@@ -33,7 +32,7 @@ class CarouselWidget extends GetView<HomeController> {
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
                       imageUrl,
-                      fit: BoxFit.contain,
+                      fit: BoxFit.fill,
                       width: double.infinity,
                       height: double.infinity,
                       loadingBuilder: (context, child, loadingProgress) {

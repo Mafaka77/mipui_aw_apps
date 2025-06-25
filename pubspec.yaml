@@ -2,7 +2,7 @@ name: mipuiaw_apps
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -38,13 +38,18 @@ dependencies:
   toggle_switch: ^2.3.0
   flutter_overlay_loader: ^2.0.0
   shimmer: ^3.0.0
-  pull_to_refresh: ^2.0.0
   image_picker: ^1.1.2
   file_picker: ^8.1.2
   animated_text_kit: ^4.2.2
   awesome_snackbar_content: ^0.1.1
   cached_network_image: ^3.4.1
   intl: ^0.19.0
+  pull_to_refresh: ^2.0.0
+  open_file: ^3.5.7
+  permission_handler: ^11.0.1
+  sn_progress_dialog: ^1.1.4
+  printing: ^5.14.2
+  pdf: ^3.10.8
 
 dev_dependencies:
   flutter_test:

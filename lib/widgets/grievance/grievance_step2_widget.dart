@@ -61,6 +61,7 @@ class GrievanceStep2Widget extends GetView<GrievanceController> {
                 return null;
               },
               onChanged: (value) {
+                controller.departmentId.value = value!.id;
                 // controller.departmentId.value = value == null ? 0 : value.id;
               },
               suffixProps: DropdownSuffixProps(
@@ -132,6 +133,7 @@ class GrievanceStep2Widget extends GetView<GrievanceController> {
             ),
             sizedBoxHeight(10),
             TextFormField(
+              controller: controller.grievanceText,
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Required';
@@ -185,7 +187,7 @@ class GrievanceStep2Widget extends GetView<GrievanceController> {
                 decoration: textDecoration('Priority'),
               ),
               onChanged: (value) {
-                // controller.gender.value = value!;
+                controller.priority.value = value!;
               },
             ),
             sizedBoxHeight(10),
@@ -230,7 +232,19 @@ class GrievanceStep2Widget extends GetView<GrievanceController> {
                     onPressed: controller.isStep2Checked.isTrue
                         ? () {
                             if (controller.grievanceFormState.currentState!
-                                .validate()) {}
+                                .validate()) {
+                              controller.submitGrievance(() {
+                                showLoader(context);
+                              }, (String message) {
+                                controller.getAllGrievance();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    mySuccessSnackBar('Success', message));
+                                Get.back();
+                                hideLoader();
+                              }, (String message) {
+                                hideLoader();
+                              });
+                            }
                           }
                         : null,
                     child: const Text(
