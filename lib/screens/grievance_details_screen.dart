@@ -15,6 +15,7 @@ import 'package:mipuiaw_apps/reusables/reusables.dart';
 import 'package:mipuiaw_apps/routes.dart';
 import 'package:mipuiaw_apps/services/base_services.dart';
 import 'package:mipuiaw_apps/widgets/grievance_details/grievance_details_widget.dart';
+import 'package:mipuiaw_apps/widgets/grievance_details/grievance_feedback_widget.dart';
 import 'package:mipuiaw_apps/widgets/grievance_details/grievance_movement_widget.dart';
 import 'package:mipuiaw_apps/widgets/grievance_details/grievance_officer_detail_widget.dart';
 import 'package:mipuiaw_apps/widgets/grievance_details/grievance_reply_widget.dart';
@@ -72,6 +73,15 @@ class GrievanceDetailsScreen extends StatelessWidget {
                                   )
                                 : Container(),
                           ),
+                          Obx(() => controller
+                                      .grievanceDetails['applicant_feedback'] !=
+                                  null
+                              ? const Card(
+                                  color: Colors.white,
+                                  elevation: 0,
+                                  child: GrievanceFeedbackWidget(),
+                                )
+                              : Container()),
                           Obx(
                             () => controller.grievanceDetails[
                                         'grievance_movement'] ==
@@ -85,7 +95,7 @@ class GrievanceDetailsScreen extends StatelessWidget {
                           ),
                           sizedBoxHeight(20),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               MaterialButton(
                                 elevation: 0,
@@ -106,25 +116,27 @@ class GrievanceDetailsScreen extends StatelessWidget {
                                 ),
                               ),
                               sizedBoxWidth(20),
-                              MaterialButton(
-                                elevation: 0,
-                                color: Colors.amber,
-                                minWidth: Get.width * 0.4,
-                                onPressed: () {
-                                  print(controller.grievanceDetails['id']);
-                                  print(storage.read('token'));
-                                  openFeedbackDialog(
-                                    context,
-                                    controller.grievanceDetails['id'],
-                                    controller.grievanceDetails[
-                                        'registration_number'],
-                                  );
-                                },
-                                child: Text(
-                                  'FEEDBACK',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
+                              controller.grievanceDetails[
+                                          'applicant_feedback'] ==
+                                      null
+                                  ? MaterialButton(
+                                      elevation: 0,
+                                      color: Colors.amber,
+                                      minWidth: Get.width * 0.4,
+                                      onPressed: () {
+                                        openFeedbackDialog(
+                                          context,
+                                          controller.grievanceDetails['id'],
+                                          controller.grievanceDetails[
+                                              'registration_number'],
+                                        );
+                                      },
+                                      child: Text(
+                                        'FEEDBACK',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                    )
+                                  : Container(),
                             ],
                           )
                         ],

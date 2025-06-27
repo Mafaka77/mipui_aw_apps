@@ -61,6 +61,7 @@ class GrievanceController extends GetxController {
 
   void submitGrievance(
       Function onLoading, Function onSuccess, Function onError) async {
+    onLoading();
     try {
       final formData = dio.FormData.fromMap({
         'department_id': departmentId.value,
