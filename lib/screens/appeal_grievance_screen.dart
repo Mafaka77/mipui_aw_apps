@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marquee/marquee.dart';
 import 'package:mipuiaw_apps/controllers/appeal_controller.dart';
+import 'package:mipuiaw_apps/models/appeal_registration_model.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
 import 'package:mipuiaw_apps/reusables/reusables.dart';
 
@@ -48,24 +49,74 @@ class AppealGrievanceScreen extends GetView<AppealController> {
                 ],
               ),
               sizedBoxHeight(20),
-              DropdownSearch<String>(
+              DropdownSearch<AppealRegistrationModel>(
                 validator: (value) {
-                  if (value == '' || value == null) {
+                  if (value == null) {
                     return 'Required';
                   }
                   return null;
                 },
-                items: (f, cs) => ["Male", 'Female'],
-                // selectedItem: controller.gender.value,
-                popupProps: PopupProps.menu(
-                    disabledItemFn: (item) => item == 'Item 3',
-                    fit: FlexFit.loose),
-                decoratorProps: DropDownDecoratorProps(
-                  decoration: textDecoration('Registration Number'),
-                ),
                 onChanged: (value) {
-                  // controller.gender.value = value!;
+                  // controller.departmentId.value = value!.id;
+                  // controller.departmentId.value = value == null ? 0 : value.id;
                 },
+                suffixProps: DropdownSuffixProps(
+                  clearButtonProps: const ClearButtonProps(
+                    isSelected: true,
+                    icon: Icon(
+                      Icons.clear,
+                    ),
+                    isVisible: true,
+                  ),
+                  dropdownButtonProps: DropdownButtonProps(
+                    iconClosed: Icon(
+                      Icons.search,
+                      color: MyColor.green,
+                    ),
+                    iconOpened: Icon(
+                      Icons.search,
+                      color: MyColor.green,
+                    ),
+                  ),
+                ),
+                decoratorProps: DropDownDecoratorProps(
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: textBoxFocusBorder(),
+                    focusedBorder: textBoxFocusBorder(),
+                    enabledBorder: textBoxFocusBorder(),
+                    hintText: 'Select Registration Number',
+                  ),
+                ),
+                items: (filter, loadProps) async =>
+                    await controller.getAppealRegistration(filter),
+                compareFn: (item1, item2) => item1.isEqual(item2),
+                popupProps: PopupPropsMultiSelection.modalBottomSheet(
+                    itemBuilder: (context, item, isDisabled, isSelected) {
+                      return ListTile(
+                        title: Text(
+                            item.registration_number ?? ''), // Adjust as needed
+                      );
+                    },
+                    showSelectedItems: true,
+                    showSearchBox: true,
+                    listViewProps: const ListViewProps(
+                      padding: EdgeInsets.all(20),
+                    ),
+                    searchFieldProps: TextFieldProps(
+                      padding:
+                          const EdgeInsets.only(left: 20, right: 20, top: 20),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        border: textBoxFocusBorder(),
+                        enabledBorder: textBoxFocusBorder(),
+                        focusedBorder: textBoxFocusBorder(),
+                        hintText: 'Search',
+                        suffixIcon: const Icon(Icons.search),
+                      ),
+                    )
+                    // itemBuilder: userModelPopupItem,
+                    ),
               ),
               sizedBoxHeight(10),
               TextFormField(

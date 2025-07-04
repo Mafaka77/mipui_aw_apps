@@ -20,4 +20,7 @@ class Routes {
   static String GET_GRIEVANCE_DETAILS(int id) => '$BASE_URL/grievance/$id/show';
   static String SUBMIT_FEEDBACK(int id) => '$BASE_URL/grievance/$id/feedback';
   static String PRINT_GRIEVANCE(int id) => '$BASE_URL/grievance/$id/print';
+
+  //APPEAL
+  static String GET_APPEAL_REGISTRATION = '$BASE_URL/appeal';
 }

@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
 import 'package:mipuiaw_apps/reusables/router.dart';
+import 'package:mipuiaw_apps/services/appeal_services.dart';
 import 'package:mipuiaw_apps/services/auth_services.dart';
 import 'package:mipuiaw_apps/services/grievance_services.dart';
 import 'package:mipuiaw_apps/services/home_services.dart';
@@ -21,6 +22,7 @@ void main() async {
   Get.put(ProfileServices(), tag: 'profileServices');
   Get.put(HomeServices(), tag: 'homeServices');
   Get.put(GrievanceServices(), tag: 'grievanceServices');
+  Get.put(AppealServices(), tag: 'appealServices');
   runApp(const MyApp());
 }
 

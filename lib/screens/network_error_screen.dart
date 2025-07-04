@@ -19,9 +19,10 @@ class NetworkErrorScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image(
-                  height: Get.height * 0.2,
-                  image: const AssetImage('images/processing-error.png'),
+                  height: Get.height * 0.1,
+                  image: const AssetImage('images/no-internet.png'),
                 ),
+                sizedBoxHeight(20),
                 Text(message!),
                 sizedBoxHeight(20),
                 MaterialButton(
