@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mipuiaw_apps/models/department_model.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:mipuiaw_apps/models/feedback_model.dart';
 import 'package:mipuiaw_apps/routes.dart';
 import 'package:mipuiaw_apps/services/base_services.dart';
 
@@ -73,7 +74,7 @@ class GrievanceServices extends BaseService {
   }
 
   Future submitFeedback(
-      int id, String regNo, String priority, String comment) async {
+      int id, String regNo, int priority, String comment) async {
     print(id);
     try {
       var response = await client.post(
@@ -86,6 +87,25 @@ class GrievanceServices extends BaseService {
       return response;
     } catch (ex) {
       print(ex);
+      return Future.error(ex);
+    }
+  }
+
+  Future<List<FeedbackModel>> getFeedbackPriority(filter) async {
+    try {
+      var response = await client.get(
+        Routes.GET_FEEDBACK_CATEGORIES,
+        queryParameters: {"filter": filter},
+      );
+
+      final data = response.data['category'];
+      print(response.data);
+      if (data != null) {
+        return FeedbackModel.fromList(data);
+      }
+
+      return [];
+    } catch (ex) {
       return Future.error(ex);
     }
   }

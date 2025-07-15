@@ -20,7 +20,11 @@ class Routes {
   static String GET_GRIEVANCE_DETAILS(int id) => '$BASE_URL/grievance/$id/show';
   static String SUBMIT_FEEDBACK(int id) => '$BASE_URL/grievance/$id/feedback';
   static String PRINT_GRIEVANCE(int id) => '$BASE_URL/grievance/$id/print';
+  static String GET_FEEDBACK_CATEGORIES = '$BASE_URL/feedback-category';
 
   //APPEAL
+  static String GET_ALL_APPEAL = '$BASE_URL/appeal/list';
   static String GET_APPEAL_REGISTRATION = '$BASE_URL/appeal';
+  static String SUBMIT_APPEAL = '$BASE_URL/appeal/store';
+  static String GET_APPEAL_DETAILS(int id) => '$BASE_URL/appeal/$id/detail';
 }

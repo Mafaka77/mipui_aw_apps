@@ -10,7 +10,7 @@ class GrievanceDetailsController extends GetxController {
   var grievanceDetails = {}.obs;
   RxList<String> attachments = <String>[].obs;
   var downloadPercentage = 0.obs;
-  var feedbackPriority = ''.obs;
+  var feedbackPriority = 0.obs;
   var feedbackComment = TextEditingController();
   @override
   void onInit() {
@@ -60,6 +60,15 @@ class GrievanceDetailsController extends GetxController {
       }
     } catch (ex) {
       onError('Something went wrong, please try again later.');
+    }
+  }
+
+  Future getFeedbackPriority(String priority) async {
+    try {
+      var response = await services.getFeedbackPriority(priority);
+      return response;
+    } catch (ex) {
+      return Future.error(ex);
     }
   }
 }

@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:mipuiaw_apps/controllers/grievance_controller.dart';
 import 'package:mipuiaw_apps/controllers/grievance_details_controller.dart';
 import 'package:mipuiaw_apps/main.dart';
+import 'package:mipuiaw_apps/models/feedback_model.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
 import 'package:mipuiaw_apps/reusables/list_loader.dart';
 import 'package:mipuiaw_apps/reusables/reusables.dart';
@@ -169,25 +170,72 @@ class GrievanceDetailsScreen extends StatelessWidget {
                     readOnly: true,
                   ),
                   const SizedBox(height: 10),
-                  DropdownSearch<String>(
+                  DropdownSearch<FeedbackModel>(
                     validator: (value) {
-                      if (value == '' || value == null) {
+                      if (value == null) {
                         return 'Required';
                       }
                       return null;
                     },
-                    items: (f, cs) =>
-                        ["Poor", 'Average', 'Good', 'Very Good', 'Excellent'],
-                    // selectedItem: controller.gender.value,
-                    popupProps: PopupProps.menu(
-                        disabledItemFn: (item) => item == 'Item 3',
-                        fit: FlexFit.loose),
-                    decoratorProps: DropDownDecoratorProps(
-                      decoration: textDecoration('Priority'),
-                    ),
                     onChanged: (value) {
-                      controller.feedbackPriority.value = value!;
+                      controller.feedbackPriority.value = value!.value;
                     },
+                    suffixProps: DropdownSuffixProps(
+                      clearButtonProps: const ClearButtonProps(
+                        isSelected: true,
+                        icon: Icon(
+                          Icons.clear,
+                        ),
+                        isVisible: true,
+                      ),
+                      dropdownButtonProps: DropdownButtonProps(
+                        iconClosed: Icon(
+                          Icons.search,
+                          color: MyColor.green,
+                        ),
+                        iconOpened: Icon(
+                          Icons.search,
+                          color: MyColor.green,
+                        ),
+                      ),
+                    ),
+                    decoratorProps: DropDownDecoratorProps(
+                      decoration: InputDecoration(
+                        isDense: true,
+                        border: textBoxFocusBorder(),
+                        focusedBorder: textBoxFocusBorder(),
+                        enabledBorder: textBoxFocusBorder(),
+                        hintText: 'Ratings',
+                      ),
+                    ),
+                    items: (filter, loadProps) async =>
+                        await controller.getFeedbackPriority(filter),
+                    compareFn: (item1, item2) => item1.isEqual(item2),
+                    popupProps: PopupPropsMultiSelection.modalBottomSheet(
+                        itemBuilder: (context, item, isDisabled, isSelected) {
+                          return ListTile(
+                            title: Text(item.label ?? ''), // Adjust as needed
+                          );
+                        },
+                        showSelectedItems: true,
+                        showSearchBox: true,
+                        listViewProps: const ListViewProps(
+                          padding: EdgeInsets.all(20),
+                        ),
+                        searchFieldProps: TextFieldProps(
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, top: 20),
+                          decoration: InputDecoration(
+                            isDense: true,
+                            border: textBoxFocusBorder(),
+                            enabledBorder: textBoxFocusBorder(),
+                            focusedBorder: textBoxFocusBorder(),
+                            hintText: 'Search',
+                            suffixIcon: const Icon(Icons.search),
+                          ),
+                        )
+                        // itemBuilder: userModelPopupItem,
+                        ),
                   ),
                   sizedBoxHeight(10),
                   TextFormField(

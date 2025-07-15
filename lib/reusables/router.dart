@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
+import 'package:mipuiaw_apps/controllers/appeal_details_controller.dart';
 import 'package:mipuiaw_apps/controllers/grievance_details_controller.dart';
 import 'package:mipuiaw_apps/middleware/auth_middleware.dart';
+import 'package:mipuiaw_apps/screens/appeal_details_screen.dart';
 import 'package:mipuiaw_apps/screens/appeal_grievance_screen.dart';
 import 'package:mipuiaw_apps/screens/feedback_screen.dart';
 import 'package:mipuiaw_apps/screens/grievance_details_screen.dart';
@@ -50,6 +52,18 @@ final getPage = [
           () {
             Get.lazyPut<GrievanceDetailsController>(
               () => GrievanceDetailsController(),
+            );
+          },
+        ),
+      ),
+      GetPage(
+        name: '/appeal-details/:id',
+        page: () => AppealDetailsScreen(),
+        transition: Transition.downToUp,
+        binding: BindingsBuilder(
+          () {
+            Get.lazyPut<AppealDetailsController>(
+              () => AppealDetailsController(),
             );
           },
         ),
