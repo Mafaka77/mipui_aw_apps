@@ -111,33 +111,37 @@ class GrievanceDetailsScreen extends StatelessWidget {
                                               'registration_number'] +
                                           '.pdf');
                                 },
-                                child: Text(
+                                child: const Text(
                                   'PRINT',
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
                               sizedBoxWidth(20),
-                              controller.grievanceDetails[
-                                          'applicant_feedback'] ==
+                              controller.grievanceDetails['final_remark'] ==
                                       null
-                                  ? MaterialButton(
-                                      elevation: 0,
-                                      color: Colors.amber,
-                                      minWidth: Get.width * 0.4,
-                                      onPressed: () {
-                                        openFeedbackDialog(
-                                          context,
-                                          controller.grievanceDetails['id'],
-                                          controller.grievanceDetails[
-                                              'registration_number'],
-                                        );
-                                      },
-                                      child: Text(
-                                        'FEEDBACK',
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                    )
-                                  : Container(),
+                                  ? Container()
+                                  : controller.grievanceDetails[
+                                              'applicant_feedback'] ==
+                                          null
+                                      ? MaterialButton(
+                                          elevation: 0,
+                                          color: Colors.amber,
+                                          minWidth: Get.width * 0.4,
+                                          onPressed: () {
+                                            openFeedbackDialog(
+                                              context,
+                                              controller.grievanceDetails['id'],
+                                              controller.grievanceDetails[
+                                                  'registration_number'],
+                                            );
+                                          },
+                                          child: const Text(
+                                            'FEEDBACK',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        )
+                                      : Container(),
                             ],
                           )
                         ],
@@ -249,7 +253,7 @@ class GrievanceDetailsScreen extends StatelessWidget {
             ),
             actions: <Widget>[
               TextButton(
-                child: Text('Submit'),
+                child: const Text('Submit'),
                 onPressed: () {
                   controller.submitFeedback(grievanceDetail, grievanceDetail2,
                       () {
@@ -259,6 +263,7 @@ class GrievanceDetailsScreen extends StatelessWidget {
                     ScaffoldMessenger.of(context)
                         .showSnackBar(mySuccessSnackBar('Success', message));
                     hideLoader();
+                    Get.back();
                   }, (String message) {
                     Get.back();
                     ScaffoldMessenger.of(context)
@@ -268,7 +273,7 @@ class GrievanceDetailsScreen extends StatelessWidget {
                 },
               ),
               TextButton(
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
                 onPressed: () {
                   Get.back(); // Close the dialog
                 },

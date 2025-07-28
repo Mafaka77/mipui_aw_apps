@@ -31,17 +31,22 @@ class BaseService extends GetConnect implements GetxService {
       InterceptorsWrapper(
         onRequest: (request, handler) async {
           var token = storage.read('token');
+          // if (request.data == null) {
+          //   await storage.remove('token');
+          //   Get.offAllNamed('/login-screen');
+          // }
+
           if (token != null && token != '') {
             request.headers['Authorization'] = 'Bearer $token';
           }
           return handler.next(request);
         },
         onError: (error, handler) async {
-          print(error);
           if (error.response?.statusCode == 401) {
             await storage.remove('token');
             Get.offAllNamed('/login-screen');
           }
+
           // if (error.response?.statusCode == 401) {
           //   await storage.remove('token');
           //   Get.offAllNamed('/login-screen');

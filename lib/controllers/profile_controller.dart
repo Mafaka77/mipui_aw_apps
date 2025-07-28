@@ -33,11 +33,13 @@ class ProfileController extends GetxController {
     onLoading();
     try {
       var response = await services.logout();
-      print(response.data);
       if (response.statusCode == 200) {
         if (response.data['status'] == 200) {
           await storage.erase();
           onSuccess();
+        } else {
+          await storage.erase();
+          Get.offAllNamed('/');
         }
       }
     } catch (ex) {

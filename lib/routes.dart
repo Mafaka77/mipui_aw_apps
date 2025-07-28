@@ -1,6 +1,7 @@
 class Routes {
-  static String BASE_URL = 'https://staging2.egovmz.in/api';
-  static String IMAGE_URL = 'https://staging2.egovmz.in/storage/';
+  static String RAW_URL = 'https://mipuiaw.mizoram.gov.in/';
+  static String BASE_URL = '${RAW_URL}api';
+  static String IMAGE_URL = '${RAW_URL}storage/';
   static String LOGIN = '$BASE_URL/login';
   static String SEND_OTP = '$BASE_URL/send-otp';
   static String VERIFY_OTP = '$BASE_URL/verify-otp';

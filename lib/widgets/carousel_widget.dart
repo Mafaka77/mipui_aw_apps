@@ -20,7 +20,7 @@ class CarouselWidget extends GetView<HomeController> {
           items: controller.carouselData.asMap().entries.map((entry) {
             int index = entry.key;
             final imageUrl = '${Routes.IMAGE_URL}carousel/${entry.value.image}';
-
+            print(imageUrl);
             return Builder(
               builder: (BuildContext context) {
                 return Container(

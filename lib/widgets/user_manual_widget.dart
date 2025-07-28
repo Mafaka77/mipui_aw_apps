@@ -1,9 +1,16 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mipuiaw_apps/controllers/home_controller.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
 import 'package:mipuiaw_apps/reusables/reusables.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:sn_progress_dialog/progress_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserManualWidget extends GetView<HomeController> {
@@ -23,34 +30,38 @@ class UserManualWidget extends GetView<HomeController> {
             ),
           ],
         ),
-        sizedBoxHeight(20),
+        sizedBoxHeight(30),
         GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, childAspectRatio: 3 / 3, crossAxisSpacing: 10),
+            crossAxisCount: 3,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 1, // 1:1 makes it square
+          ),
           shrinkWrap: true,
           itemCount: controller.pdfList.length,
           physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (c, i) {
+          itemBuilder: (context, i) {
             var data = controller.pdfList[i];
             return Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 InkWell(
                   onTap: () {
                     if (i != 0) {
-                      // downloadFile(context, data['url'], data['file_name']);
+                      downloadFile(context, data['url'], data['file_name']);
                     } else {
                       openYouTube('l_cHrrMkILc');
                     }
                   },
-                  child: Container(
-                    height: Get.height * 0.09,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(14.0),
+                  child: AspectRatio(
+                    aspectRatio: 3 / 2, // Ensures it's square
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle, // Ensures it's a circle
+                        color: Colors.white,
+                      ),
+                      padding: const EdgeInsets.all(14),
                       child: Center(
                         child: SvgPicture.asset(
                           color: MyColor.green,
@@ -69,6 +80,7 @@ class UserManualWidget extends GetView<HomeController> {
             );
           },
         )
+
         // Row(
         //   mainAxisAlignment: MainAxisAlignment.spaceAround,
         //   children: [
@@ -118,5 +130,41 @@ class UserManualWidget extends GetView<HomeController> {
     } else {
       throw 'Could not launch YouTube video';
     }
+  }
+
+  void downloadFile(BuildContext context, String? url, String? fileName) async {
+    // try {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+    final Directory directory = await getApplicationDocumentsDirectory();
+    // final Directory directory = Directory('/storage/emulated/0/Download/Rti');
+    String filePath = '${directory.path}/$fileName';
+    Dio dio = Dio();
+    // ignore: use_build_context_synchronously
+    ProgressDialog pd = ProgressDialog(context: context);
+    pd.show(max: 100, msg: 'File Downloading...');
+    await dio.download(
+      url!,
+      filePath,
+      onReceiveProgress: (count, total) {
+        if (total != -1) {
+          controller.downloadPercentage.value = ((count / total * 100).toInt());
+          pd.update(value: controller.downloadPercentage.value);
+        }
+      },
+    );
+
+    OpenFile.open(filePath);
+    showDownloadSuccessSnackBar(
+        'Success',
+        'File downloaded successfully',
+        const Icon(
+          Icons.check,
+          color: Colors.blue,
+        ),
+        filePath);
+    // } catch (ex) {}
   }
 }

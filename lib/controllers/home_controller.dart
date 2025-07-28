@@ -1,29 +1,32 @@
 import 'package:get/get.dart';
 import 'package:mipuiaw_apps/models/carousel_model.dart';
+import 'package:mipuiaw_apps/routes.dart';
 import 'package:mipuiaw_apps/services/home_services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class HomeController extends GetxController {
   HomeServices services = Get.find(tag: 'homeServices');
   late YoutubePlayerController youtubePlayerController;
+  var downloadPercentage = 0.obs;
+
   var pdfList = [
     {
-      'url': 'https://rti.mizoram.gov.in/images/rti.pdf',
+      'url': 'https://rti.mizoram.gov.in/userManual/UserManualMizov2.pdf',
       'icon': 'images/youtube.svg',
       'name': 'Video',
       'file_name': 'rti.pdf'
     },
     {
-      'url': 'https://rti.mizoram.gov.in/images/guidelines.pdf',
+      'url': '${Routes.RAW_URL}userManual/UserManualMizov2.pdf',
       'icon': 'images/file.svg',
       'name': 'Mizo',
       'file_name': 'guidelines.pdf'
     },
     {
-      'url': 'https://rti.mizoram.gov.in/my/tc',
+      'url': '${Routes.RAW_URL}userManual/USerManualEnglishv2.pdf',
       'icon': 'images/file.svg',
       'name': 'English',
-      'file_name': ''
+      'file_name': 'english.pdf'
     }
   ];
   var carouselList = [

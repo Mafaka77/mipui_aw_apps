@@ -48,6 +48,7 @@ class GrievanceDetailsController extends GetxController {
 
   void submitFeedback(int id, String regNo, Function onLoading,
       Function onSuccess, Function onError) async {
+    onLoading();
     try {
       var response = await services.submitFeedback(
           id, regNo, feedbackPriority.value, feedbackComment.text);

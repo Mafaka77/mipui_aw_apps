@@ -8,6 +8,13 @@ import 'package:get/get.dart';
 import 'package:mipuiaw_apps/reusables/colors.dart';
 import 'package:open_file/open_file.dart';
 
+termsHeadingStyle() {
+  return const TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 18,
+  );
+}
+
 textBoxFocusBorder() {
   return OutlineInputBorder(
     borderSide: BorderSide(

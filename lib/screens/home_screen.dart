@@ -52,8 +52,10 @@ class HomeScreen extends StatelessWidget {
                     sizedBoxHeight(10),
                     const UserManualWidget(),
                     sizedBoxHeight(20),
-                    const Image(
-                        image: AssetImage('images/mipuiaw_helpline.png')),
+                    Image(
+                      width: Get.width,
+                      image: const AssetImage('images/mipuiaw_helpline.png'),
+                    ),
                     sizedBoxHeight(40),
                     const DevelopedByWidget(),
                   ],

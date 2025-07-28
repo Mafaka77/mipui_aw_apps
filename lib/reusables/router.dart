@@ -5,6 +5,7 @@ import 'package:mipuiaw_apps/middleware/auth_middleware.dart';
 import 'package:mipuiaw_apps/screens/appeal_details_screen.dart';
 import 'package:mipuiaw_apps/screens/appeal_grievance_screen.dart';
 import 'package:mipuiaw_apps/screens/feedback_screen.dart';
+import 'package:mipuiaw_apps/screens/forgot_password_screen.dart';
 import 'package:mipuiaw_apps/screens/grievance_details_screen.dart';
 import 'package:mipuiaw_apps/screens/lodge_grievance_screen.dart';
 import 'package:mipuiaw_apps/screens/login_screen.dart';
@@ -28,6 +29,10 @@ final getPage = [
   GetPage(
     name: '/register',
     page: () => const RegisterScreen(),
+  ),
+  GetPage(
+    name: '/forgot-password',
+    page: () => const ForgotPasswordScreen(),
   ),
   GetPage(
     name: '/',

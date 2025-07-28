@@ -106,22 +106,22 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ),
                     sizedBoxHeight(10),
-                    ListTile(
-                      onTap: () {
-                        Get.toNamed('/profile/feedback');
-                      },
-                      tileColor: Colors.white,
-                      leading: SvgPicture.asset('images/feedback.svg'),
-                      title: const Text('Feedback'),
-                      trailing: IconButton(
-                        onPressed: () {
-                          Get.toNamed('/profile/feedback');
-                        },
-                        icon: const Icon(
-                          Icons.arrow_right,
-                        ),
-                      ),
-                    ),
+                    // ListTile(
+                    //   onTap: () {
+                    //     Get.toNamed('/profile/feedback');
+                    //   },
+                    //   tileColor: Colors.white,
+                    //   leading: SvgPicture.asset('images/feedback.svg'),
+                    //   title: const Text('Feedback'),
+                    //   trailing: IconButton(
+                    //     onPressed: () {
+                    //       Get.toNamed('/profile/feedback');
+                    //     },
+                    //     icon: const Icon(
+                    //       Icons.arrow_right,
+                    //     ),
+                    //   ),
+                    // ),
                     sizedBoxHeight(10),
                     ListTile(
                       onTap: () {
@@ -153,7 +153,7 @@ class ProfileScreen extends StatelessWidget {
                       },
                       tileColor: Colors.white,
                       leading: SvgPicture.asset('images/terms.svg'),
-                      title: const Text('Terms and Conditions'),
+                      title: const Text('Terms and Policy'),
                       trailing: IconButton(
                         onPressed: () {
                           Get.toNamed('/profile/terms');
@@ -165,11 +165,16 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     sizedBoxHeight(10),
                     ListTile(
+                      onTap: () {
+                        deleteAccount(context, controller);
+                      },
                       tileColor: Colors.white,
                       leading: SvgPicture.asset('images/delete_account.svg'),
                       title: const Text('Delete Account'),
                       trailing: IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          deleteAccount(context, controller);
+                        },
                         icon: const Icon(
                           Icons.arrow_right,
                         ),
@@ -190,14 +195,56 @@ class ProfileScreen extends StatelessWidget {
           return CupertinoAlertDialog(
             title: const Column(
               children: [
-                Image(
-                  height: 40,
-                  image: AssetImage('images/logout.png'),
-                ),
+                // Image(
+                //   height: 40,
+                //   image: AssetImage('images/logout.png'),
+                // ),
                 Text('Come back soon!'),
               ],
             ),
             content: const Text('Are you sure you want to Log Out?'),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text('NO'),
+              ),
+              MaterialButton(
+                onPressed: () {
+                  // storage.erase();
+                  controller.logout(() {
+                    showLoader(context);
+                  }, () {
+                    storage.erase();
+                    Get.offAllNamed('/');
+                    hideLoader();
+                  }, () {
+                    hideLoader();
+                  });
+                },
+                child: const Text('YES'),
+              ),
+            ],
+          );
+        });
+  }
+
+  void deleteAccount(BuildContext context, ProfileController controller) {
+    showDialog(
+        context: context,
+        builder: (_) {
+          return CupertinoAlertDialog(
+            title: const Column(
+              children: [
+                // Image(
+                //   height: 40,
+                //   image: AssetImage('images/logout.png'),
+                // ),
+                Text('Your account will lost'),
+              ],
+            ),
+            content: const Text('Are you sure you want to delete you account?'),
             actions: [
               MaterialButton(
                 onPressed: () {
